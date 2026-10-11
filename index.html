@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="PrintCheck — a local, offline evidence viewer for Windows printer queue, driver, and port metadata. Not a compatibility certificate.">
+<title>PrintCheck — experimental concept prototype</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip-link" id="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <p class="eyebrow">Local · offline · no telemetry · no network requests</p>
+    <h1>PrintCheck</h1>
+    <p id="prototype-notice" class="tagline" role="note"><strong>Experimental concept prototype — idea exploration only.</strong> This is a work-in-progress demo, not a finished or production-ready product.</p>
+    <p class="tagline">
+      A local evidence viewer for Windows printer queue, driver, and port metadata collected by
+      <code>collector/Collect-PrintCheck.ps1</code>. It is <strong>not a compatibility certificate</strong>:
+      print success, scan success, Windows protected print mode state, Mopria certification, and
+      IPP/eSCL capability are never tested here and stay unknown.
+    </p>
+    <p class="banner" id="fiction-banner" hidden>Sample data — fictional. Not collected from a real computer.</p>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- 01 · Load -------------------------------------------------------------- -->
+  <section class="panel" aria-labelledby="load-h">
+    <h2 id="load-h"><span class="step">01</span> Load evidence</h2>
+    <p class="hint">
+      Import a PrintCheck collector JSON document, or explore the built-in fictional samples.
+      Imported data stays in this page: nothing is uploaded, requested, or stored.
+    </p>
+    <div class="controls">
+      <button type="button" class="btn primary" id="load-sample">Load fictional sample</button>
+      <button type="button" class="btn" id="load-empty">Load empty-queues sample</button>
+      <button type="button" class="btn" id="load-partial">Load partial-failure sample</button>
+      <label class="file-label" for="file-input">Import collector JSON…</label>
+      <input type="file" id="file-input" accept=".json,application/json">
+      <button type="button" class="btn" id="clear-all" disabled>Clear</button>
+    </div>
+    <p class="status" id="status-line" role="status" aria-live="polite">Nothing loaded yet.</p>
+    <ul class="errors" id="error-panel" role="alert" hidden></ul>
+    <p class="hint">Source: <span id="source-name">—</span></p>
+    <p class="warn" id="warnings-line" hidden></p>
+  </section>
+
+  <!-- 02 · Filter and export ------------------------------------------------- -->
+  <section class="panel" aria-labelledby="filter-h">
+    <h2 id="filter-h"><span class="step">02</span> Filter and export</h2>
+    <div class="controls">
+      <div class="field">
+        <label for="filter-term">Search rows</label>
+        <input type="text" id="filter-term" placeholder="Queue, driver, port, status…" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="filter-status">Source status</label>
+        <select id="filter-status">
+          <option value="all" selected>All sources</option>
+          <option value="ok">ok only</option>
+          <option value="failed">failed only</option>
+          <option value="unavailable">unavailable only</option>
+        </select>
+      </div>
+      <label class="check" for="opt-identifiers">
+        <input type="checkbox" id="opt-identifiers">
+        <span>Include raw identifiers in exported reports (opt-in)</span>
+      </label>
+    </div>
+    <p class="hint" id="identifier-note">
+      Exports ordinalize queue, host, network, hardware, and source-file identifiers by default
+      ("Queue 1", "Network 1", "Source file 1"). Provider error text, port descriptions, API labels,
+      and unknown explanations are replaced with bounded built-in text in both modes; other reported
+      metadata (statuses, driver and OS details) is exported as reported — review before sharing.
+    </p>
+    <div class="controls">
+      <button type="button" class="btn primary" id="export-json" disabled>Export JSON report</button>
+      <button type="button" class="btn" id="export-html" disabled>Export HTML report</button>
+    </div>
+  </section>
+
+  <!-- 03 · Summary ----------------------------------------------------------- -->
+  <section class="panel" aria-labelledby="summary-h">
+    <h2 id="summary-h"><span class="step">03</span> Summary</h2>
+    <p class="summary" id="summary-line">Nothing loaded.</p>
+  </section>
+
+  <!-- 04 · Queues ------------------------------------------------------------ -->
+  <section class="panel" id="panel-queues" aria-labelledby="queues-h">
+    <h2 id="queues-h"><span class="step">04</span> Queues <span class="count" id="queues-count">0</span></h2>
+    <p class="source-line">
+      Source status: <span class="source-status">not loaded</span> ·
+      API: <span class="source-api">—</span>
+    </p>
+    <p class="source-error" hidden></p>
+    <div class="table-wrap">
+      <table>
+        <caption>Printer queues as reported by the collector document (allowlisted fields only)</caption>
+        <thead>
+          <tr>
+            <th scope="col">Queue</th>
+            <th scope="col">Driver</th>
+            <th scope="col">Port</th>
+            <th scope="col">Shared</th>
+            <th scope="col">Reported status</th>
+          </tr>
+        </thead>
+        <tbody id="queues-body"></tbody>
+      </table>
+    </div>
+    <p class="message" id="queues-message" hidden></p>
+  </section>
+
+  <!-- 05 · Drivers ----------------------------------------------------------- -->
+  <section class="panel" id="panel-drivers" aria-labelledby="drivers-h">
+    <h2 id="drivers-h"><span class="step">05</span> Drivers <span class="count" id="drivers-count">0</span></h2>
+    <p class="source-line">
+      Source status: <span class="source-status">not loaded</span> ·
+      API: <span class="source-api">—</span>
+    </p>
+    <p class="source-error" hidden></p>
+    <div class="table-wrap">
+      <table>
+        <caption>Installed printer drivers as reported by the collector document (allowlisted fields only)</caption>
+        <thead>
+          <tr>
+            <th scope="col">Driver</th>
+            <th scope="col">Environment</th>
+            <th scope="col">Manufacturer</th>
+            <th scope="col">Major version</th>
+            <th scope="col">Driver version</th>
+          </tr>
+        </thead>
+        <tbody id="drivers-body"></tbody>
+      </table>
+    </div>
+    <p class="message" id="drivers-message" hidden></p>
+  </section>
+
+  <!-- 06 · Ports ------------------------------------------------------------- -->
+  <section class="panel" id="panel-ports" aria-labelledby="ports-h">
+    <h2 id="ports-h"><span class="step">06</span> Ports <span class="count" id="ports-count">0</span></h2>
+    <p class="source-line">
+      Source status: <span class="source-status">not loaded</span> ·
+      API: <span class="source-api">—</span>
+    </p>
+    <p class="source-error" hidden></p>
+    <div class="table-wrap">
+      <table>
+        <caption>Printer ports as reported by the collector document (allowlisted fields only)</caption>
+        <thead>
+          <tr>
+            <th scope="col">Port</th>
+            <th scope="col">Description</th>
+            <th scope="col">Host address</th>
+            <th scope="col">Port number</th>
+          </tr>
+        </thead>
+        <tbody id="ports-body"></tbody>
+      </table>
+    </div>
+    <p class="message" id="ports-message" hidden></p>
+  </section>
+
+  <!-- 07 · Unknowns ---------------------------------------------------------- -->
+  <section class="panel" aria-labelledby="unknowns-h">
+    <h2 id="unknowns-h"><span class="step">07</span> Unknowns — not tested by this tool</h2>
+    <p class="hint">
+      These stay unknown or not-tested on purpose. A queue, driver, or port entry — even one whose
+      driver name contains words like "Mopria", "IPP", "WPP", or "eSCL" — never implies that printing,
+      scanning, or certification will work.
+    </p>
+    <ul class="list" id="unknowns-list"></ul>
+  </section>
+
+  <!-- 08 · Limitations ------------------------------------------------------- -->
+  <section class="panel" aria-labelledby="limitations-h">
+    <h2 id="limitations-h"><span class="step">08</span> Limitations of every report</h2>
+    <ul class="list" id="limitations-list"></ul>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>
+      PrintCheck runs entirely in this page from local files. It makes no network requests, keeps no
+      persistent storage, and never reads print jobs. Built-in samples are fictional demo data.
+    </p>
+  </div>
+</footer>
+
+<script src="core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

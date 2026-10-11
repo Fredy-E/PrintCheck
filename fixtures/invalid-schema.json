@@ -1,0 +1,23 @@
+{
+  "schema": "printcheck.collector",
+  "schemaVersion": 99,
+  "tool": { "name": "PrintCheck Collector", "version": "0.1.0", "mode": "sample" },
+  "generatedAt": "2026-10-11T09:34:00Z",
+  "host": {
+    "status": "ok",
+    "api": null,
+    "error": null,
+    "hostName": "FICTION-INVALID-HOST",
+    "powershellVersion": null,
+    "processorArchitecture": null,
+    "os": null
+  },
+  "sources": {
+    "queues": { "status": "ok", "api": null, "error": null, "count": 0, "truncated": false, "droppedItemCount": 0, "items": [] },
+    "drivers": { "status": "ok", "api": null, "error": null, "count": 0, "truncated": false, "droppedItemCount": 0, "items": [] },
+    "ports": { "status": "ok", "api": null, "error": null, "count": 0, "truncated": false, "droppedItemCount": 0, "items": [] }
+  },
+  "unknowns": [],
+  "limits": { "maxItemsPerSource": 500, "maxStringLength": 300 },
+  "provenance": { "script": "collector/Collect-PrintCheck.ps1", "mode": "sample", "queriesExecuted": [] }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "printcheck",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local, offline evidence viewer for Windows printer queue/driver/port metadata. Not a compatibility certificate.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/core.test.cjs tests/block-key-ordinal-regression.test.cjs",
+    "test:browser": "node tests/browser.cjs",
+    "test:collector": "pwsh -NoProfile -NonInteractive -File tests/collector-tests.ps1"
+  }
+}

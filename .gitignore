@@ -1,0 +1,10 @@
+node_modules/
+*.log
+
+# Synthetic browser test downloads and screenshots
+tests/evidence/
+test-results/
+
+# Collector default outputs (per-run snapshots; never commit them)
+PrintCheck-collector-*.json
+printcheck-collector-*.json

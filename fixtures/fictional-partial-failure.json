@@ -1,0 +1,64 @@
+{
+  "schema": "printcheck.collector",
+  "schemaVersion": 1,
+  "tool": { "name": "PrintCheck Collector", "version": "0.1.0", "mode": "sample" },
+  "generatedAt": "2026-10-11T09:32:00Z",
+  "host": {
+    "status": "ok",
+    "api": "Get-CimInstance Win32_OperatingSystem (fictional fixture)",
+    "error": null,
+    "hostName": "FICTION-PARTIAL-HOST",
+    "powershellVersion": "7.6.6 (fictional fixture)",
+    "processorArchitecture": "ARM64 (fictional fixture)",
+    "os": {
+      "caption": "Fictional Sample Operating System",
+      "version": "10.0.99999",
+      "build": "99999",
+      "architecture": "ARM64 (fictional fixture)"
+    }
+  },
+  "sources": {
+    "queues": {
+      "status": "ok",
+      "api": "Get-Printer (PrintManagement) - fictional fixture",
+      "error": null,
+      "count": 4,
+      "truncated": false,
+      "droppedItemCount": 0,
+      "items": [
+        { "name": "FICTION-Queue-Alpha", "driverName": "Fictional Universal Print Driver v4", "portName": "FICTION-Port-01", "shared": false, "status": "Idle" },
+        { "name": "FICTION-Queue-Beta", "driverName": "Fictional Universal Print Driver v4", "portName": "FICTION-Port-01", "shared": true, "status": "Idle" },
+        { "name": "FICTION-Queue-Gamma (Fax)", "driverName": "Fictional Fax Driver", "portName": "FICTION-Port-Fax", "shared": false, "status": "Idle" },
+        { "name": "FICTION-Queue-Delta", "driverName": "Fictional Label Driver", "portName": "FICTION-Port-02", "shared": false, "status": "Paused" }
+      ]
+    },
+    "drivers": {
+      "status": "failed",
+      "api": "Get-PrinterDriver (PrintManagement) - fictional fixture",
+      "error": { "kind": "provider-error", "message": "Fictional failure: the driver list could not be read for FICTION-Queue-Alpha (FICTION-Port-01)." },
+      "count": 0,
+      "truncated": false,
+      "droppedItemCount": 0,
+      "items": []
+    },
+    "ports": {
+      "status": "unavailable",
+      "api": "Get-PrinterPort (PrintManagement) - fictional fixture",
+      "error": { "kind": "provider-unavailable", "message": "Fictional sample: port data is unavailable." },
+      "count": 0,
+      "truncated": false,
+      "droppedItemCount": 0,
+      "items": []
+    }
+  },
+  "unknowns": [
+    { "topic": "mopria-certification", "state": "not-tested", "reason": "Mopria certification is a vendor program; queue metadata cannot establish it." },
+    { "topic": "ipp-escl-capability", "state": "not-tested", "reason": "IPP and eSCL support are not reported by the Windows APIs this collector uses." },
+    { "topic": "windows-protected-print-mode", "state": "unknown", "reason": "Windows protected print mode state is not queried; check Windows Settings on the target machine." },
+    { "topic": "print-success", "state": "not-tested", "reason": "No print job was submitted or monitored; this tool never reads print jobs." },
+    { "topic": "scan-success", "state": "not-tested", "reason": "No scan was performed or monitored." },
+    { "topic": "readiness", "state": "not-tested", "reason": "Queue, driver, and port metadata does not imply that printing or scanning will succeed." }
+  ],
+  "limits": { "maxItemsPerSource": 500, "maxStringLength": 300 },
+  "provenance": { "script": "collector/Collect-PrintCheck.ps1", "mode": "sample", "queriesExecuted": [] }
+}
