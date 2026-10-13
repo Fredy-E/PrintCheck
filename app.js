@@ -36,6 +36,7 @@
     exportJson: document.getElementById('export-json'),
     exportHtml: document.getElementById('export-html'),
     summaryLine: document.getElementById('summary-line'),
+    viewFilterNote: document.getElementById('view-filter-note'),
     unknownsList: document.getElementById('unknowns-list'),
     limitationsList: document.getElementById('limitations-list')
   };
@@ -249,6 +250,27 @@
     renderWarnings();
     renderControls();
     KINDS.forEach(renderSource);
+    renderFilterNote();
+  }
+
+  function isFilteredView() {
+    if (!state.doc) return false;
+    var termActive = !!(state.term && state.term.trim());
+    var statusActive = state.filterStatus !== 'all';
+    return termActive || statusActive;
+  }
+
+  function renderFilterNote() {
+    if (!els.viewFilterNote) return;
+    if (!isFilteredView()) {
+      els.viewFilterNote.textContent = '';
+      els.viewFilterNote.hidden = true;
+      return;
+    }
+    els.viewFilterNote.textContent =
+      'Filtered view \u2014 showing a subset of the loaded records. ' +
+      'Summary counts show the full dataset; exports contain the full dataset.';
+    els.viewFilterNote.hidden = false;
   }
 
   // -------------------------------------------------------------------------
@@ -359,6 +381,7 @@
   els.filterTerm.addEventListener('input', function () {
     state.term = els.filterTerm.value;
     KINDS.forEach(renderSource);
+    renderFilterNote();
   });
 
   els.filterTerm.addEventListener('keydown', function (event) {
@@ -366,6 +389,7 @@
       els.filterTerm.value = '';
       state.term = '';
       KINDS.forEach(renderSource);
+      renderFilterNote();
     }
   });
 

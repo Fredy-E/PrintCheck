@@ -81,7 +81,7 @@ Browser artifacts default to `tests/evidence/` relative to this folder. Set
   imports fixtures through the real file input, byte-checks real downloads, drives the
   UI by keyboard, and fails on any console/page error or any HTTP(S) request.
 - `tests/cdp-browser.cjs` is copied byte-identical (sha256
-  `3db68b5bcb1d2d5b2aabd12dce2cceb1bfda08cce9d547957d0f407315305c67`) from the parent
+  `333c280ae1e6b77d88760ce1f85bd60375357b66f852eeaff17e6e7b254c11d8`) from the parent
   workspace's smoke-tested helper.
 
 ## Repository layout
@@ -124,3 +124,14 @@ docs/verification.md            exactly what was executed, with evidence paths
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Verify (default)
+
+Full default verification (unit + helper + real-Chrome browser + workbench UI regression):
+
+```sh
+npm run verify
+# = node --test tests/core.test.cjs tests/block-key-ordinal-regression.test.cjs tests/cdp-helper.test.cjs && node tests/browser.cjs && node tests/ui-workbench.cjs
+```
+
+`npm test` runs the unit subset only. Browser suites need real Chrome and Node 26+ (built-in WebSocket); they own a fresh headless profile per run. Set `PRINTCHECK_EVIDENCE_DIR` to redirect artifacts.

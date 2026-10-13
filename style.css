@@ -1,120 +1,175 @@
-/* PrintCheck — dark-blue printer-evidence theme.
-   Distinct from the sibling tools: paper/printout motifs (dashed cut lines,
-   monospace data columns) on a deep navy ground, with an accessible focus
-   ring and layouts that survive 320px with maximal legal field values. */
+/* PrintCheck — portfolio-preview-1 workbench.
+   Calm navy/blue surfaces with restrained gold status accents. System fonts
+   only, no requests, no storage. Dark default honors the original tool;
+   light scheme follows the OS preference without any persisted setting. */
 
 :root {
-  color-scheme: dark;
-  --bg: #071626;
-  --bg-glow: #0b2136;
-  --panel: #0e2740;
-  --panel-2: #123152;
-  --line: #1e3f5e;
-  --line-2: #2b5c88;
-  --ink: #e8f1fa;
-  --muted: #9db4cb;
-  --accent: #6cb6ff;
-  --accent-2: #a8d4ff;
-  --ok: #7fd6a4;
-  --warn: #ffd166;
-  --err: #ff9d9d;
-  --radius: 10px;
-  --mono: "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  color-scheme: dark light;
+  --ui-bg: #0c1422;
+  --ui-surface: #142034;
+  --ui-surface-2: #1a2c47;
+  --ui-ink: #eef4ff;
+  --ui-muted: #adbbd2;
+  --ui-accent: #8cbcff;
+  --ui-accent-ink: #061c33;
+  --ui-border: #31445f;
+  --ui-border-strong: #47668f;
+  --ui-radius: 12px;
+  --ui-gold: #e3b857;
+  --ui-gold-ink: #2a1f04;
+  --ui-ok: #8fdcab;
+  --ui-warn: #ffd166;
+  --ui-err: #ffa3a3;
+  --ui-mono: ui-monospace, Consolas, Menlo, monospace;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light dark;
+    --ui-bg: #f2f5fa;
+    --ui-surface: #ffffff;
+    --ui-surface-2: #e8eef7;
+    --ui-ink: #1d2b44;
+    --ui-muted: #4d617e;
+    --ui-accent: #204fb0;
+    --ui-accent-ink: #ffffff;
+    --ui-border: #ccd8e9;
+    --ui-border-strong: #9db4d0;
+    --ui-gold: #8a6a1f;
+    --ui-gold-ink: #ffffff;
+    --ui-ok: #166534;
+    --ui-warn: #8a5a00;
+    --ui-err: #b42323;
+  }
 }
 
 * { box-sizing: border-box; }
 
 [hidden] { display: none !important; }
 
-html { background: var(--bg); }
+html { background: var(--ui-bg); }
 
 body {
   margin: 0;
   min-height: 100vh;
-  color: var(--ink);
-  background: radial-gradient(1100px 520px at 78% -8%, var(--bg-glow), var(--bg) 62%);
-  font: 15px/1.55 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color: var(--ui-ink);
+  background: var(--ui-bg);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 18px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 18px; min-width: 0; }
 
-/* ---------- skip link (stays inside the viewport so nothing overflows) ---- */
+/* ---------- skip link ---------- */
 
 .skip-link {
   position: absolute;
   top: -52px;
   left: 10px;
   z-index: 10;
-  background: var(--accent);
-  color: #05203a;
+  background: var(--ui-gold);
+  color: var(--ui-gold-ink);
   padding: 9px 14px;
   border-radius: 0 0 8px 8px;
   font-weight: 650;
   text-decoration: none;
+  max-width: calc(100vw - 20px);
 }
 .skip-link:focus { top: 0; }
 
-/* ---------- header -------------------------------------------------------- */
+/* ---------- masthead ---------- */
 
-.site-head { padding: 30px 0 4px; }
+.masthead {
+  border-top: 4px solid var(--ui-gold);
+  padding: 26px 0 6px;
+  min-width: 0;
+}
+
+.masthead-inner { min-width: 0; }
 
 .eyebrow {
-  font: 11px/1 var(--mono);
-  letter-spacing: 2.2px;
+  font: 11px/1.4 var(--ui-mono);
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--ui-accent);
   margin: 0 0 10px;
+  overflow-wrap: anywhere;
 }
 
 h1 {
-  font-size: clamp(26px, 4.4vw, 38px);
-  font-weight: 650;
-  letter-spacing: -0.8px;
-  margin: 0 0 6px;
+  font-size: clamp(26px, 4.4vw, 36px);
+  font-weight: 680;
+  letter-spacing: -0.6px;
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
 }
 
-.tagline { color: var(--muted); margin: 0; max-width: 82ch; }
-.tagline strong { color: var(--ink); }
+.prototype-notice {
+  margin: 0 0 10px;
+  padding: 10px 14px;
+  max-width: 82ch;
+  border: 1px solid var(--ui-border);
+  border-left: 4px solid var(--ui-gold);
+  border-radius: 8px;
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.prototype-notice strong { color: var(--ui-ink); }
+
+.tagline { color: var(--ui-muted); margin: 0; max-width: 82ch; overflow-wrap: anywhere; }
+.tagline strong { color: var(--ui-ink); }
 
 code {
-  font-family: var(--mono);
+  font-family: var(--ui-mono);
   font-size: 0.92em;
-  color: var(--accent-2);
+  color: var(--ui-accent);
   overflow-wrap: anywhere;
 }
 
 .banner {
   margin: 14px 0 0;
   padding: 10px 14px;
-  border: 1px dashed var(--warn);
-  border-radius: var(--radius);
-  background: rgba(255, 209, 102, 0.08);
-  color: var(--warn);
+  max-width: 82ch;
+  border: 1px dashed var(--ui-gold);
+  border-radius: var(--ui-radius);
+  color: var(--ui-ink);
+  background: var(--ui-surface);
   font-weight: 650;
+  overflow-wrap: anywhere;
 }
 
-/* ---------- panels (printout cards with a cut line) ----------------------- */
-
-main { padding-bottom: 30px; }
-
-.panel {
-  position: relative;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin: 16px 0;
+.masthead-facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  min-width: 0;
+}
+.masthead-facts li {
+  font: 12px/1.4 var(--ui-mono);
+  color: var(--ui-muted);
+  border: 1px solid var(--ui-border);
+  border-radius: 999px;
+  padding: 4px 10px;
+  overflow-wrap: anywhere;
   min-width: 0;
 }
 
-.panel::after {
-  content: "";
-  position: absolute;
-  left: 18px;
-  right: 18px;
-  bottom: -9px;
-  border-bottom: 1px dashed var(--line);
-  pointer-events: none;
+/* ---------- workbench panels ---------- */
+
+main.workbench { padding-bottom: 30px; min-width: 0; }
+
+.panel {
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  padding: 18px;
+  margin: 16px 0;
+  min-width: 0;
 }
 
 h2 {
@@ -124,30 +179,72 @@ h2 {
   gap: 10px;
   margin: 0 0 10px;
   font-size: 18px;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .step {
-  font: 11px/1 var(--mono);
+  font: 11px/1.6 var(--ui-mono);
   letter-spacing: 1.6px;
-  color: var(--accent);
+  color: var(--ui-gold-ink);
+  background: var(--ui-gold);
+  border-radius: 6px;
+  padding: 2px 8px;
+  white-space: nowrap;
 }
 
 .count {
-  font: 12px/1 var(--mono);
-  color: var(--muted);
-  border: 1px solid var(--line);
+  font: 12px/1.6 var(--ui-mono);
+  color: var(--ui-muted);
+  border: 1px solid var(--ui-border);
   border-radius: 999px;
-  padding: 3px 9px;
+  padding: 2px 9px;
+  white-space: nowrap;
 }
 
-.hint { color: var(--muted); font-size: 13px; margin: 8px 0; overflow-wrap: anywhere; }
+.hint { color: var(--ui-muted); font-size: 13px; margin: 8px 0; overflow-wrap: anywhere; min-width: 0; }
+.group-hint { color: var(--ui-muted); font-size: 12.5px; margin: 0 0 8px; overflow-wrap: anywhere; }
 
-/* ---------- controls ------------------------------------------------------ */
+/* ---------- action workspace ---------- */
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 10px 0;
+  min-width: 0;
+}
+
+@media (min-width: 760px) {
+  .action-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.action-group {
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: var(--ui-surface-2);
+  padding: 12px;
+  min-width: 0;
+}
+
+@media (prefers-color-scheme: light) {
+  .action-group { background: var(--ui-bg); }
+}
+
+.action-group h3 {
+  margin: 0 0 2px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--ui-muted);
+}
+
+/* ---------- controls ---------- */
 
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 14px;
+  gap: 10px 12px;
   align-items: flex-end;
   margin: 10px 0;
   min-width: 0;
@@ -156,49 +253,56 @@ h2 {
 .btn,
 .file-label {
   appearance: none;
-  border: 1px solid var(--line-2);
-  background: var(--panel-2);
-  color: var(--ink);
+  border: 1px solid var(--ui-border-strong);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
   padding: 9px 14px;
   border-radius: 8px;
   font: inherit;
   font-weight: 600;
   cursor: pointer;
   max-width: 100%;
+  min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.btn:hover:not(:disabled) { border-color: var(--accent); }
+.btn:hover:not(:disabled) { border-color: var(--ui-accent); }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: #06223c; }
-.btn.primary:hover:not(:disabled) { background: var(--accent-2); }
+.btn.primary {
+  background: var(--ui-accent);
+  border-color: var(--ui-accent);
+  color: var(--ui-accent-ink);
+}
+.btn.primary:hover:not(:disabled) { filter: brightness(1.08); }
 
-:focus-visible {
-  outline: 3px solid var(--warn);
+:focus-visible,
+.table-wrap:focus-visible {
+  outline: 3px solid var(--ui-gold);
   outline-offset: 2px;
 }
 
 input[type="file"] {
-  color: var(--muted);
+  color: var(--ui-muted);
   font: inherit;
   max-width: 100%;
+  min-width: 0;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  flex: 1 1 220px;
+  flex: 1 1 200px;
   min-width: 0;
 }
 
-.field label { font-size: 13px; color: var(--muted); }
+.field label { font-size: 13px; color: var(--ui-muted); }
 
 input[type="text"],
 select {
-  background: #0a1e31;
-  border: 1px solid var(--line);
-  color: var(--ink);
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  color: var(--ui-ink);
   border-radius: 8px;
   padding: 8px 10px;
   font: inherit;
@@ -211,34 +315,70 @@ select {
   display: flex;
   gap: 8px;
   align-items: flex-start;
-  flex: 1 1 260px;
+  flex: 1 1 240px;
   min-width: 0;
   font-size: 14px;
   padding-bottom: 2px;
+  overflow-wrap: anywhere;
 }
 
-.check input { margin-top: 3px; }
+.check input { margin-top: 3px; flex: none; }
 
-/* ---------- status lines -------------------------------------------------- */
+/* ---------- status lines ---------- */
 
-.status { font-family: var(--mono); font-size: 13.5px; margin: 8px 0; overflow-wrap: anywhere; }
-.errors { color: var(--err); margin: 6px 0; padding-left: 20px; overflow-wrap: anywhere; }
+.status { font-family: var(--ui-mono); font-size: 13.5px; margin: 8px 0; overflow-wrap: anywhere; min-width: 0; }
+.errors { color: var(--ui-err); margin: 6px 0; padding-left: 20px; overflow-wrap: anywhere; min-width: 0; }
 .errors li { margin: 2px 0; }
-.warn { color: var(--warn); font-size: 13px; margin: 6px 0; overflow-wrap: anywhere; }
-.summary { font-family: var(--mono); font-size: 13.5px; margin: 6px 0; overflow-wrap: anywhere; }
+.warn { color: var(--ui-warn); font-size: 13px; margin: 6px 0; overflow-wrap: anywhere; min-width: 0; }
+.summary {
+  display: inline-block;
+  font-family: var(--ui-mono);
+  font-size: 13.5px;
+  margin: 6px 0;
+  padding: 8px 12px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: var(--ui-surface-2);
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  min-width: 0;
+}
+@media (prefers-color-scheme: light) {
+  .summary { background: var(--ui-bg); }
+}
 
-.source-line { font-size: 13px; color: var(--muted); margin: 4px 0; overflow-wrap: anywhere; }
-.source-status { font-family: var(--mono); }
-.status-ok { color: var(--ok); }
-.status-failed { color: var(--err); }
-.status-unavailable { color: var(--warn); }
-.status-not-loaded { color: var(--muted); }
-.source-error { color: var(--err); font-size: 13px; margin: 4px 0; overflow-wrap: anywhere; }
+/* Filtered-view disclosure: plain-text truthful note for filtered tables.
+   Visible on screen and on paper (it is a <p>, never inside .controls, so
+   print keeps it). Hidden when unfiltered/empty/cleared via [hidden].
+   Never echoes the raw search query; summary counts stay full and exports
+   stay full. */
+#view-filter-note {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--ui-muted);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.source-line { font-size: 13px; color: var(--ui-muted); margin: 4px 0; overflow-wrap: anywhere; min-width: 0; }
+.source-status { font-family: var(--ui-mono); }
+.status-ok { color: var(--ui-ok); }
+.status-failed { color: var(--ui-err); }
+.status-unavailable { color: var(--ui-warn); }
+.status-not-loaded { color: var(--ui-muted); }
+.source-error { color: var(--ui-err); font-size: 13px; margin: 4px 0; overflow-wrap: anywhere; min-width: 0; }
 .source-api { overflow-wrap: anywhere; }
 
-/* ---------- tables (printout columns) ------------------------------------- */
+/* ---------- evidence tables (scroll inside the panel) ---------- */
 
-.table-wrap { min-width: 0; }
+.table-wrap {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  scrollbar-width: thin;
+}
 
 table {
   width: 100%;
@@ -249,9 +389,9 @@ table {
 caption {
   caption-side: top;
   text-align: left;
-  color: var(--muted);
+  color: var(--ui-muted);
   font-size: 12px;
-  padding: 0 0 6px;
+  padding: 8px 8px 6px;
   overflow-wrap: anywhere;
 }
 
@@ -259,54 +399,70 @@ th, td {
   text-align: left;
   vertical-align: top;
   padding: 8px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--ui-border);
   overflow-wrap: anywhere;
   word-break: break-word;
+  min-width: 0;
+  /* Explicit bidi isolation: imported strings may contain U+202E/U+202B
+     overrides. Values are preserved verbatim (no sanitizing, no parser or
+     export change); isolation keeps a hostile queue name from visually
+     reordering adjacent driver/port/status cells. Chrome already computes
+     isolate here — this rule documents the intent. */
+  unicode-bidi: isolate;
 }
 
 th {
-  color: var(--accent-2);
-  font-size: 12.5px;
+  color: var(--ui-accent);
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  border-bottom-color: var(--line-2);
+  border-bottom: 1px solid var(--ui-border-strong);
 }
 
-td { font-family: var(--mono); font-size: 13px; }
+td { font-family: var(--ui-mono); font-size: 13px; }
 
-.message { color: var(--muted); font-size: 13.5px; margin: 8px 0 0; }
+.message { color: var(--ui-muted); font-size: 13.5px; margin: 8px 0 0; overflow-wrap: anywhere; }
+.message-empty {
+  border: 1px dashed var(--ui-border-strong);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
 
-/* ---------- lists --------------------------------------------------------- */
+/* ---------- lists ---------- */
 
-.list { margin: 6px 0; padding-left: 20px; }
+.list { margin: 6px 0; padding-left: 20px; min-width: 0; }
 .list li { margin: 4px 0; overflow-wrap: anywhere; }
 
-/* ---------- footer -------------------------------------------------------- */
+/* ---------- footer ---------- */
 
 .site-foot {
-  border-top: 1px dashed var(--line);
-  color: var(--muted);
+  border-top: 1px solid var(--ui-border);
+  color: var(--ui-muted);
   font-size: 12.5px;
   padding: 16px 0 30px;
   margin-top: 10px;
 }
+.site-foot p { overflow-wrap: anywhere; }
 
-/* ---------- small screens ------------------------------------------------- */
+/* ---------- small screens: stacked record cards ---------- */
 
 @media (max-width: 560px) {
   .wrap { padding: 0 12px; }
   h1 { font-size: 25px; }
   .panel { padding: 13px; }
+  .action-grid { grid-template-columns: 1fr; }
   .controls .btn,
   .controls .file-label { flex: 1 1 100%; text-align: center; }
   th, td { padding: 6px; }
 
-  /* Stacked record cards: tables stay readable on narrow screens without
-     horizontal scrolling and without hiding any field. */
+  /* Narrow record cards keep hostile-length strings readable without
+     pushing the page wider; the .table-wrap stays the scroll boundary
+     for any content that still needs it. */
   table, tbody, tr, td { display: block; width: 100%; }
   thead { display: none; }
-  caption { display: block; width: 100%; padding-bottom: 4px; }
-  tr { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 10px 0; }
+  caption { display: block; width: 100%; }
+  tr { border-bottom: 1px solid var(--ui-border); padding: 8px 10px; margin: 0; }
+  tr:last-child { border-bottom: 0; }
   td {
     border: 0;
     padding: 2px 0;
@@ -317,11 +473,54 @@ td { font-family: var(--mono); font-size: 13px; }
   }
   td::before {
     content: attr(data-label);
-    color: var(--muted);
-    font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    color: var(--ui-muted);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.4px;
     padding-top: 2px;
+    overflow-wrap: anywhere;
+    min-width: 0;
   }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- print ---------- */
+
+@media print {
+  :root {
+    --ui-bg: #ffffff;
+    --ui-surface: #ffffff;
+    --ui-surface-2: #ffffff;
+    --ui-ink: #000000;
+    --ui-muted: #333333;
+    --ui-accent: #000000;
+    --ui-border: #666666;
+    --ui-gold: #000000;
+  }
+  body { background: #fff; color: #000; font-size: 12px; }
+  /* Hide every interactive control in print without hiding evidence:
+     text/select/checkbox/file inputs, selects, textareas, all buttons,
+     and the file-input label. Tables, captions, summaries, unknowns and
+     limitations stay printable. */
+  .skip-link, .controls .file-label, .file-label,
+  input, select, textarea, button { display: none !important; }
+  .masthead { border-top: 3px solid #000; padding-top: 12px; }
+  .panel { break-inside: avoid; border: 1px solid #000; margin: 10px 0; }
+  .table-wrap { overflow: visible; border: 1px solid #000; }
+  table { table-layout: auto; }
+  thead { display: table-header-group; }
+  table, tbody, tr, td { display: revert; width: auto; }
+  td { display: revert; }
+  td::before { content: none; }
+  a { color: #000; text-decoration: none; }
 }
